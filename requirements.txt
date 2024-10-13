@@ -1,0 +1,4 @@
+imutils==0.5.4
+joblib==1.4.2
+numpy==2.1.2
+opencv-python-headless==4.10.0.84
