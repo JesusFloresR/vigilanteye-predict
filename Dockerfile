@@ -6,7 +6,7 @@ RUN apt-get update && \
 
 RUN mkdir -p /opt/ml/code
 
-COPY train.py /opt/ml/code
+COPY predict.py /opt/ml/code
 COPY requirements.txt /opt/ml/code
 
 WORKDIR /opt/ml/code
