@@ -12,7 +12,7 @@ detector = face_detection.build_detector("RetinaNetMobileNetV1", confidence_thre
 app = Flask(__name__)
 
 # torch_home = 'D:\\UNMSM\\Ciclo X\\Desarrollo de proyecto de tesis II\\Proyecto\\aws ecs for lambda\\facial_recognition'
-torch_home = '/tmp'
+torch_home = '/opt/ml/model'
 
 face_recognizer, label_encoder = load_model(torch_home+'/hub/checkpoints')
 
