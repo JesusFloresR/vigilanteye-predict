@@ -7,6 +7,7 @@ WORKDIR /opt/program
 # Install python3-venv
 RUN apt-get update && \
     apt-get install -y python3-venv && \
+    apt-get install -y ffmpeg libsm6 libxext6 && \
     rm -rf /var/lib/apt/lists/*
 
 # Create a virtual environment
