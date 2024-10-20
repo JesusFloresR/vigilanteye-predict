@@ -7,7 +7,7 @@ import face_detection
 from inference import load_model, predict
 import numpy as np
 
-torch_home = '/opt/ml/model'
+torch_home = '/tmp'
 os.environ['TORCH_HOME'] = torch_home
 
 face_recognizer, label_encoder = load_model(torch_home+'/hub/checkpoints')
