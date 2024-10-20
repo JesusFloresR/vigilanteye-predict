@@ -7,6 +7,11 @@ import face_detection
 from inference import load_model, predict
 import numpy as np
 
+model_dir = '/opt/ml/model'
+files = os.listdir(model_dir)
+# Print the list of files and directories
+for file in files:
+    print(f'File: {file}')
 torch_home = '/tmp'
 os.environ['TORCH_HOME'] = torch_home
 
