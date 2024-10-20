@@ -7,7 +7,7 @@ import tarfile
 from joblib import load
 import numpy as np
 
-def get_retina_face_mobilenet(destination_directory):
+def upload_retina_face_mobilenet(destination_directory):
     id = '6'
     name = ''
     bucket = 'vigilanteye-models'
@@ -41,18 +41,7 @@ def get_retina_face_mobilenet(destination_directory):
     else:
         print('Error al descargar el archivo:', response.status_code)
 
-
-def get_models_prediction(model_dir):
-    # Crea un cliente de S3
-    s3_client = boto3.client('s3')
-
-    # Descarga el archivo .tar.gz
-    s3_client.download_file('vigilanteye-models', '6/face-recognition-training-job-1728849236/output/model.tar.gz', f'{model_dir}/model.tar.gz')
-
-    # Descomprime el archivo .tar.gz
-    with tarfile.open(f'{model_dir}/model.tar.gz', 'r:gz') as tar:
-        tar.extractall(path=model_dir)
-
+def model_fn(model_dir):
     # Carga el modelo LBPH
     model_path = os.path.join(model_dir, 'modeloLBPHFace.xml')
     face_recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -61,13 +50,6 @@ def get_models_prediction(model_dir):
     # Carga el label encoder
     model_path = os.path.join(model_dir, 'label_encoder.pkl')
     label_encoder = load(model_path)
-
-    return face_recognizer, label_encoder
-
-def load_model(destination_directory):
-    # destination_directory = './hub/checkpoints'
-    get_retina_face_mobilenet(destination_directory)
-    face_recognizer, label_encoder = get_models_prediction(destination_directory)
 
     return face_recognizer, label_encoder
 

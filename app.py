@@ -4,25 +4,21 @@ import os
 import boto3
 from flask import Flask
 import face_detection
-from inference import load_model, predict
+from inference import predict, model_fn, upload_retina_face_mobilenet
 import numpy as np
+import json
 
 model_dir = '/opt/ml/model'
-files = os.listdir(model_dir)
-# Print the list of files and directories
-for file in files:
-    print(f'File: {file}')
 torch_home = '/tmp'
 os.environ['TORCH_HOME'] = torch_home
 
-face_recognizer, label_encoder = load_model(torch_home+'/hub/checkpoints')
+face_recognizer, label_encoder = model_fn(model_dir)
+upload_retina_face_mobilenet(torch_home+'/hub/checkpoints')
 detector = face_detection.build_detector("RetinaNetMobileNetV1", confidence_threshold = 0.5, nms_iou_threshold = 0.3)
 
 app = Flask(__name__)
 
 # torch_home = 'D:\\UNMSM\\Ciclo X\\Desarrollo de proyecto de tesis II\\Proyecto\\aws ecs for lambda\\facial_recognition'
-
-
 
 @app.route("/ping", methods=["GET"])
 def ping():
@@ -66,8 +62,7 @@ def invocations():
         image_data = response['Body'].read()
         image_array = np.frombuffer(image_data, np.uint8)
         img = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
-        print(predict(face_recognizer, label_encoder, img, detector))
-        return 'ok'
+        return json.dumps(predict(face_recognizer, label_encoder, img, detector))
     except Exception as e:
         print(e)
         return {
