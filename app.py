@@ -7,16 +7,17 @@ import face_detection
 from inference import load_model, predict
 import numpy as np
 
+torch_home = '/opt/ml/model'
+os.environ['TORCH_HOME'] = torch_home
+
+face_recognizer, label_encoder = load_model(torch_home+'/hub/checkpoints')
 detector = face_detection.build_detector("RetinaNetMobileNetV1", confidence_threshold = 0.5, nms_iou_threshold = 0.3)
 
 app = Flask(__name__)
 
 # torch_home = 'D:\\UNMSM\\Ciclo X\\Desarrollo de proyecto de tesis II\\Proyecto\\aws ecs for lambda\\facial_recognition'
-torch_home = '/opt/ml/model'
 
-face_recognizer, label_encoder = load_model(torch_home+'/hub/checkpoints')
 
-os.environ['TORCH_HOME'] = torch_home
 
 @app.route("/ping", methods=["GET"])
 def ping():
