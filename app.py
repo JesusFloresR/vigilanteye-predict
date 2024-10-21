@@ -7,6 +7,7 @@ import face_detection
 from inference import predict, model_fn, upload_retina_face_mobilenet
 import numpy as np
 import json
+from flask import jsonify
 
 model_dir = '/opt/ml/model'
 torch_home = '/tmp'
@@ -62,7 +63,8 @@ def invocations():
         image_data = response['Body'].read()
         image_array = np.frombuffer(image_data, np.uint8)
         img = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
-        return json.dumps(predict(face_recognizer, label_encoder, img, detector))
+        return json.dumps(predict(face_recognizer, label_encoder, img, detector).tolist())
+    
     except Exception as e:
         print(e)
         return {
