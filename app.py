@@ -1,12 +1,10 @@
 import cv2
-import json
 import os
 import boto3
 from flask import Flask
 import face_detection
 from inference import predict, model_fn, upload_retina_face_mobilenet
 import numpy as np
-import json
 from flask import jsonify
 
 model_dir = '/opt/ml/model'
@@ -58,12 +56,12 @@ def invocations():
         # print(url_presigned)
         # response = requests.get(url_presigned)
         response = s3_client.get_object(Bucket=bucket, Key=key)
-        print('get')
 
         image_data = response['Body'].read()
         image_array = np.frombuffer(image_data, np.uint8)
         img = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
         result = predict(face_recognizer, label_encoder, img, detector)
+        print(result)
         return jsonify(result)
     
     except Exception as e:
