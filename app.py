@@ -63,14 +63,15 @@ def invocations():
         image_data = response['Body'].read()
         image_array = np.frombuffer(image_data, np.uint8)
         img = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
-        return json.dumps(predict(face_recognizer, label_encoder, img, detector).tolist())
+        result = predict(face_recognizer, label_encoder, img, detector)
+        return jsonify(result)
     
     except Exception as e:
         print(e)
-        return {
+        return jsonify({
             'statusCode': 500,
-            'body': json.dumps(str(e))
-        }
+            'body': str(e)
+        })
     
 
 if __name__ == '__main__':
