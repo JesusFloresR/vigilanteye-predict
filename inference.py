@@ -100,6 +100,6 @@ def predict(face_recognizer, label_encoder, img, detector):
             prediction = face_recognizer.predict(gray)
             label = get_label(prediction, label_encoder, umbral)
             # predictions.append(label)  # O cualquier otro formato que necesites
-            predictions.append([label, xmin, ymin, xmax, ymax])
+            predictions.append([label, float(xmin), float(ymin), float(xmax), float(ymax)])
 
     return predictions
