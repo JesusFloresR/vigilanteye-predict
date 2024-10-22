@@ -1,7 +1,7 @@
 import cv2
 import os
 import boto3
-from flask import Flask
+from flask import Flask, request
 import face_detection
 from inference import predict, model_fn, upload_retina_face_mobilenet
 import numpy as np
@@ -30,6 +30,9 @@ def ping():
 def invocations():
     # Cargar el modelo
     try:
+        image_data = request.data
+        print('Imagen data')
+        print(image_data)
         s3_client = boto3.client('s3')
         url = 'https://7eo8t81vd3.execute-api.us-east-2.amazonaws.com/service-generate-presigned-url'
         print(url)
