@@ -58,9 +58,9 @@ def invocations():
         # url_presigned = response.json()
         # print(url_presigned)
         # response = requests.get(url_presigned)
-        response = s3_client.get_object(Bucket=bucket, Key=key)
+        # response = s3_client.get_object(Bucket=bucket, Key=key)
 
-        image_data = response['Body'].read()
+        # image_data = response['Body'].read()
         image_array = np.frombuffer(image_data, np.uint8)
         img = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
         result = predict(face_recognizer, label_encoder, img, detector)
