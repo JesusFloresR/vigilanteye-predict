@@ -80,15 +80,15 @@ def extract_face(img, detector):
 
 def get_label(prediction, label_encoder, umbral_confianza):
     etiqueta_predicha = None
-
-    if prediction[1] < umbral_confianza:
+    metric = prediction[1]
+    if metric < umbral_confianza:
         clase_predicha = np.argmax(prediction)
         print("clase_predicha: ", clase_predicha)
         etiqueta_predicha = label_encoder.inverse_transform([prediction[0]])[0]
     else: 
         etiqueta_predicha = "Desconocido"
     
-    return etiqueta_predicha
+    return etiqueta_predicha, metric
 
 def predict(face_recognizer, label_encoder, img, detector):
     faces = extract_face(img, detector)
@@ -98,8 +98,8 @@ def predict(face_recognizer, label_encoder, img, detector):
         for face, xmin, ymin, xmax, ymax in faces:
             gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
             prediction = face_recognizer.predict(gray)
-            label = get_label(prediction, label_encoder, umbral)
+            label, metric = get_label(prediction, label_encoder, umbral)
             # predictions.append(label)  # O cualquier otro formato que necesites
-            predictions.append([label, float(xmin), float(ymin), float(xmax), float(ymax)])
+            predictions.append([label, float(xmin), float(ymin), float(xmax), float(ymax), metric])
 
     return predictions

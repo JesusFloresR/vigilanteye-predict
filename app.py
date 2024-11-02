@@ -31,29 +31,6 @@ def invocations():
     # Cargar el modelo
     try:
         image_data = request.data
-        print('Imagen data')
-        print(image_data)
-        s3_client = boto3.client('s3')
-        url = 'https://7eo8t81vd3.execute-api.us-east-2.amazonaws.com/service-generate-presigned-url'
-        print(url)
-        # s3=event['Records'][0]['s3']
-        # bucket=s3['bucket']['name']
-        # key=s3['object']['key']
-
-        bucket='vigilanteye-inference-data'
-        key='6/inference-image.jpg'
-
-        key_fragments=key.split('/')
-        id=key_fragments[0]
-        name=key_fragments[-1].split('.')[0]
-        data = {
-            'method': 'get_object',
-            'id': int(id),
-            'name': name,
-            'bucket': bucket,
-            'key': key
-        }
-
         # response = requests.post(url, json=data)
         # url_presigned = response.json()
         # print(url_presigned)
