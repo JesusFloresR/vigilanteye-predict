@@ -93,7 +93,7 @@ def get_label(prediction, label_encoder, umbral_confianza):
 def predict(face_recognizer, label_encoder, img, detector):
     faces = extract_face(img, detector)
     predictions = []
-    umbral=65
+    umbral=70
     if faces is not None:
         for face, xmin, ymin, xmax, ymax in faces:
             gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
