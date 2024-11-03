@@ -96,8 +96,8 @@ def predict(face_recognizer, label_encoder, img, detector):
     umbral=70
     if faces is not None:
         for face, xmin, ymin, xmax, ymax in faces:
-            gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
-            prediction = face_recognizer.predict(gray)
+            # gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
+            prediction = face_recognizer.predict(face)
             label, metric = get_label(prediction, label_encoder, umbral)
             # predictions.append(label)  # O cualquier otro formato que necesites
             predictions.append([label, float(xmin), float(ymin), float(xmax), float(ymax), metric])
