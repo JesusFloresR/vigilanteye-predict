@@ -39,7 +39,7 @@ def invocations():
 
         # image_data = response['Body'].read()
         image_array = np.frombuffer(image_data, np.uint8)
-        img = cv2.imdecode(image_array, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
         result = predict(face_recognizer, label_encoder, img, detector)
         print(result)
         return jsonify(result)
